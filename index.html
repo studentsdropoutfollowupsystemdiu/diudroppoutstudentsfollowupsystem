@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DIU Dropout Follow-up System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>DIU Dropout Follow-up System</h1>
+  <p>Daffodil International University</p>
+</header>
+
+<!-- ROLE SELECT -->
+<div class="role-buttons">
+  <button class="student" onclick="showSection('student')">🎓 Student</button>
+  <button class="advisor" onclick="showSection('advisor')">👨‍🏫 Advisor</button>
+  <button class="office" onclick="showSection('office')">🏢 Office</button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+  <div class="dash-card green">
+    <h4>Total Students</h4>
+    <span id="d_total">0</span>
+  </div>
+
+  <div class="dash-card blue">
+    <h4>Continue</h4>
+    <span id="d_continue">0</span>
+  </div>
+
+  <div class="dash-card red">
+    <h4>Drop</h4>
+    <span id="d_drop">0</span>
+  </div>
+
+  <div class="dash-card orange">
+    <h4>Undecided</h4>
+    <span id="d_undecided">0</span>
+  </div>
+
+  <div class="dash-card green">
+    <h4>Advisor Reviewed</h4>
+    <span id="d_advisor">0</span>
+  </div>
+
+  <div class="dash-card red">
+    <h4>Office Action</h4>
+    <span id="d_office">0</span>
+  </div>
+</div>
+
+<!-- STUDENT -->
+<div class="card" id="studentBox">
+  <h3>🎓 Student Feedback</h3>
+
+  <form id="studentForm" onsubmit="event.preventDefault(); submitStudent();">
+    <input id="s_sid" placeholder="Student ID" required>
+    <input id="s_name" placeholder="Student Name" required>
+    <input id="s_email" placeholder="Student Email" required>
+    <input id="s_phone" placeholder="Student Phone">
+    <input id="s_dept" placeholder="Department">
+
+    <select id="s_decision">
+      <option value="Continue">Continue</option>
+      <option value="Drop">Drop</option>
+      <option value="Undecided">Undecided</option>
+    </select>
+
+    <textarea id="s_reason" placeholder="Reason (Optional)"></textarea>
+
+    <button type="submit" class="submit student">Submit Feedback</button>
+  </form>
+</div>
+
+<!-- ADVISOR -->
+<div class="card" id="advisorBox">
+  <h3>👨‍🏫 Advisor Input</h3>
+
+  <form onsubmit="event.preventDefault(); submitAdvisor();">
+    <input id="a_sid" placeholder="Student ID" required>
+    <input id="a_name" placeholder="Student Name" required>
+    <input id="a_email" placeholder="Student Email" required>
+    <input id="a_phone" placeholder="Student Phone">
+    <input id="a_gphone" placeholder="Guardian Phone">
+    <input id="a_dept" placeholder="Department">
+    <input id="a_credit" placeholder="Completed Credits">
+    <input id="a_cgpa" placeholder="CGPA">
+
+    <select id="a_status">
+      <option value="Probation">Probation</option>
+      <option value="Dropped">Dropped</option>
+    </select>
+
+    <button type="submit" class="submit advisor">Save Advisor Input</button>
+  </form>
+</div>
+
+<!-- OFFICE -->
+<div class="card" id="officeBox">
+  <h3>🏢 Office Action</h3>
+
+  <form id="officeForm" onsubmit="event.preventDefault(); submitOffice();">
+    <input id="o_sid" placeholder="Student ID" required>
+    <input id="o_name" placeholder="Student Name" required>
+    <input id="o_by" placeholder="Reviewed By">
+    <input id="o_action" placeholder="Action Taken">
+    <textarea id="o_remark" placeholder="Remark"></textarea>
+
+    <button type="submit" class="submit office">Save Office Action</button>
+  </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

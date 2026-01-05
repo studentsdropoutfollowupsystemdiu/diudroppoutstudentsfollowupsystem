@@ -1,0 +1,129 @@
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4f8f6;
+}
+
+header {
+  background: linear-gradient(90deg, #0A7E4A, #0E9B5F);
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+header p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* ROLE BUTTONS */
+.role-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+
+.role-buttons button {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  color: white;
+}
+
+.role-buttons .student { background: #1976D2; }
+.role-buttons .advisor { background: #0A7E4A; }
+.role-buttons .office  { background: #E53935; }
+
+/* CARD */
+.card {
+  max-width: 500px;
+  background: white;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  display: none;
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #0A7E4A;
+}
+
+/* FORM */
+input, select, textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button.submit {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button.submit.student { background: #1976D2; }
+button.submit.advisor { background: #0A7E4A; }
+button.submit.office  { background: #E53935; }
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .card {
+    margin: 10px;
+  }
+}
+
+/* DASHBOARD */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin: 20px;
+}
+
+.dash-card {
+  padding: 18px;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.dash-card h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dash-card span {
+  font-size: 28px;
+  font-weight: bold;
+  display: block;
+  margin-top: 8px;
+}
+
+.green { background: #0A7E4A; }
+.blue  { background: #1976D2; }
+.red   { background: #E53935; }
+.orange{ background: #FB8C00; }
