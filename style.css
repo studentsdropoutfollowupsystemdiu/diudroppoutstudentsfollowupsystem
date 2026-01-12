@@ -1,3 +1,4 @@
+/* ===== GLOBAL ===== */
 * {
   box-sizing: border-box;
   font-family: "Segoe UI", Arial, sans-serif;
@@ -8,11 +9,18 @@ body {
   background: #f4f8f6;
 }
 
+/* ===== HEADER ===== */
 header {
   background: linear-gradient(90deg, #0A7E4A, #0E9B5F);
   color: white;
   text-align: center;
   padding: 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
 }
 
 header p {
@@ -21,7 +29,7 @@ header p {
   opacity: 0.9;
 }
 
-/* ROLE BUTTONS */
+/* ===== ROLE BUTTONS ===== */
 .role-buttons {
   display: flex;
   justify-content: center;
@@ -43,7 +51,7 @@ header p {
 .role-buttons .advisor { background: #0A7E4A; }
 .role-buttons .office  { background: #E53935; }
 
-/* CARD */
+/* ===== CARD ===== */
 .card {
   max-width: 500px;
   background: white;
@@ -56,10 +64,11 @@ header p {
 
 .card h3 {
   margin-top: 0;
+  margin-bottom: 12px;
   color: #0A7E4A;
 }
 
-/* FORM */
+/* ===== FORM ===== */
 input, select, textarea {
   width: 100%;
   margin-bottom: 10px;
@@ -87,14 +96,7 @@ button.submit.student { background: #1976D2; }
 button.submit.advisor { background: #0A7E4A; }
 button.submit.office  { background: #E53935; }
 
-/* MOBILE */
-@media (max-width: 600px) {
-  .card {
-    margin: 10px;
-  }
-}
-
-/* DASHBOARD */
+/* ===== DASHBOARD ===== */
 .dashboard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -123,7 +125,71 @@ button.submit.office  { background: #E53935; }
   margin-top: 8px;
 }
 
-.green { background: #0A7E4A; }
-.blue  { background: #1976D2; }
-.red   { background: #E53935; }
-.orange{ background: #FB8C00; }
+.green  { background: #0A7E4A; }
+.blue   { background: #1976D2; }
+.red    { background: #E53935; }
+.orange { background: #FB8C00; }
+
+/* ===== STUDENT FEEDBACK LIST ===== */
+#studentListBox {
+  max-width: 95%;
+  margin: 20px auto;
+}
+
+#studentListBox h3 {
+  margin-bottom: 10px;
+}
+
+/* scroll container */
+#studentListBox > div {
+  max-height: 320px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* table */
+#studentTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: white;
+}
+
+/* header */
+#studentTable thead th {
+  position: sticky;
+  top: 0;
+  background: #0A7E4A;
+  color: white;
+  text-align: left;
+  padding: 8px;
+  font-weight: 600;
+  z-index: 2;
+}
+
+/* cells */
+#studentTable td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+
+/* row hover */
+#studentTable tbody tr:hover {
+  background: #f1f8f4;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .card {
+    margin: 10px;
+  }
+
+  #studentTable {
+    font-size: 12px;
+  }
+}
+max-width: 180px;
+overflow: hidden;
+text-overflow: ellipsis;
