@@ -174,7 +174,6 @@ function renderStudentTable(data) {
       <th>Reason</th>
     </tr>
   `;
-
   const frag = document.createDocumentFragment();
 
   rows.forEach(row => {
