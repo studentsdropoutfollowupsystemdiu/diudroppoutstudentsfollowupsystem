@@ -1,17 +1,39 @@
-const APP_URL = "https://script.google.com/macros/s/AKfycbwAo0qWQvekI8-aLRDZyH2R0mANoPkjp3by_x7xRq83UMi0GMCwerJGFSdf7p7N6t-6uA/exec";
+/* ===================== ELEMENTS ===================== */
+const studentBox     = document.getElementById("studentBox");
+const advisorBox     = document.getElementById("advisorBox");
+const officeBox      = document.getElementById("officeBox");
+const studentListBox = document.getElementById("studentListBox");
 
-/* ---------- SHOW SECTION ---------- */
+const APP_URL = "https://script.google.com/macros/s/AKfycbwAeSRyZz3Hwa7bkjpYKeRLoqeVbOZTjwlSkc2UWnKs1MmhPE14PLIBVvpthumrdK1Dxw/exec";
+
+/* ===================== ROLE SWITCH ===================== */
 function showSection(role) {
+  // hide all
   studentBox.style.display = "none";
   advisorBox.style.display = "none";
-  officeBox.style.display = "none";
+  officeBox.style.display  = "none";
+  studentListBox.style.display = "none";
 
-  if (role === "student") studentBox.style.display = "block";
-  if (role === "advisor") advisorBox.style.display = "block";
-  if (role === "office") officeBox.style.display = "block";
+  if (role === "student") {
+    studentBox.style.display = "block";
+    return;
+  }
+
+  if (role === "advisor") {
+    advisorBox.style.display = "block";
+    studentListBox.style.display = "block";
+    loadStudentListForStaff();
+    return;
+  }
+
+  if (role === "office") {
+    officeBox.style.display = "block";
+    studentListBox.style.display = "block";
+    loadStudentListForStaff();
+  }
 }
 
-/* ---------- STUDENT SUBMIT ---------- */
+/* ===================== STUDENT SUBMIT ===================== */
 function submitStudent() {
   const data = {
     role: "student",
@@ -36,7 +58,7 @@ function submitStudent() {
     .catch(err => alert(err));
 }
 
-/* ---------- ADVISOR SUBMIT ---------- */
+/* ===================== ADVISOR SUBMIT ===================== */
 function submitAdvisor() {
   const data = {
     role: "advisor",
@@ -56,11 +78,14 @@ function submitAdvisor() {
     body: JSON.stringify(data)
   })
     .then(r => r.text())
-    .then(alert)
+    .then(msg => {
+      alert(msg);
+      loadStudentListForStaff(true); // refresh
+    })
     .catch(err => alert(err));
 }
 
-/* ---------- OFFICE SUBMIT ---------- */
+/* ===================== OFFICE SUBMIT ===================== */
 function submitOffice() {
   const data = {
     role: "office",
@@ -79,10 +104,12 @@ function submitOffice() {
     .then(msg => {
       alert(msg);
       officeForm.reset();
+      loadStudentListForStaff(true); // refresh
     })
     .catch(err => alert(err));
 }
 
+/* ===================== DASHBOARD ===================== */
 function loadDashboard() {
   fetch(APP_URL + "?action=dashboard")
     .then(res => res.json())
@@ -95,41 +122,72 @@ function loadDashboard() {
       d_office.innerText = d.office;
     });
 }
-
 loadDashboard();
-/************ EMAIL ************/
-function sendStudentEmail(email, name) {
-  if (!email) return;
 
-  const subject = "DIU Academic Follow-up Notification";
-  const body =
-    "Dear " + name + ",\n\n" +
-    "Your academic status has been reviewed by your advisor.\n" +
-    "Please stay in contact with the university for further instructions.\n\n" +
-    "Regards,\n" +
-    "DIU Academic Office";
+/* ===================== STUDENT LIST ===================== */
+let studentListCache = null;
 
-  MailApp.sendEmail(email, subject, body);
+function loadStudentListForStaff(force = false) {
+  if (studentListCache && !force) {
+    renderStudentTable(studentListCache);
+    return;
+  }
+
+  fetch(APP_URL + "?action=studentList")
+    .then(res => res.json())
+    .then(data => {
+      studentListCache = data;
+      renderStudentTable(data);
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Failed to load student feedback list");
+    });
 }
 
-/************ SMS ************/
-function sendGuardianSMS(phone, studentName) {
-  if (!phone) return;
+function renderStudentTable(data) {
+  if (!data || data.length < 2) return;
 
-  const message =
-    "DIU Notice: Guardian of " + studentName +
-    ", your student’s academic case has been reviewed. Please stay in contact with DIU.";
+  const headers = data[0];
+  const rows = data.slice(1);
 
-  UrlFetchApp.fetch(SMS_API_URL, {
-    method: "post",
-    payload: {
-      user: SMS_USER,
-      api_key: SMS_API_KEY,
-      senderid: SMS_SENDER,
-      contacts: phone,
-      msg: message
-    },
-    muteHttpExceptions: true
+  const thead = document.querySelector("#studentTable thead");
+  const tbody = document.querySelector("#studentTable tbody");
+
+  thead.innerHTML = "";
+  tbody.innerHTML = "";
+
+  const idx = {
+    id: headers.indexOf("Student ID"),
+    name: headers.indexOf("Student Name"),
+    decision: headers.indexOf("Decision"),
+    dept: headers.indexOf("Department"),
+    reason: headers.indexOf("Reason")
+  };
+
+  thead.innerHTML = `
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Decision</th>
+      <th>Department</th>
+      <th>Reason</th>
+    </tr>
+  `;
+
+  const frag = document.createDocumentFragment();
+
+  rows.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${row[idx.id] || ""}</td>
+      <td>${row[idx.name] || ""}</td>
+      <td>${row[idx.decision] || ""}</td>
+      <td>${row[idx.dept] || ""}</td>
+      <td>${row[idx.reason] || ""}</td>
+    `;
+    frag.appendChild(tr);
   });
 
+  tbody.appendChild(frag);
 }
