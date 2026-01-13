@@ -190,3 +190,4 @@ function renderStudentTable(data) {
 
   tbody.appendChild(frag);
 }
+
