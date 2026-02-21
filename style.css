@@ -190,6 +190,22 @@ button.submit.office  { background: #E53935; }
     font-size: 12px;
   }
 }
-max-width: 180px;
-overflow: hidden;
-text-overflow: ellipsis;
+/* prevent long text overflow */
+#studentTable td {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-bar select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
