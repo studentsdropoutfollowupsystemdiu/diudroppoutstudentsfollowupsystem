@@ -71,6 +71,16 @@
 <!-- STUDENT -->
 <div class="card" id="studentBox">
   <h3>🎓 Student Feedback</h3>
+  <div class="filter-bar">
+  <select id="filterSemester" onchange="applyFilters()">
+  <select id="filterDept" onchange="applyFilters()">
+    <option value="">All Semesters</option>
+  </select>
+
+  <select id="filterDept" onchange="applyFilters()">
+    <option value="">All Departments</option>
+  </select>
+</div>
 
   <form id="studentForm" onsubmit="event.preventDefault(); submitStudent();">
     <input id="s_sid" placeholder="Student ID" required>
