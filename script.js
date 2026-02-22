@@ -4,7 +4,7 @@ const advisorBox     = document.getElementById("advisorBox");
 const officeBox      = document.getElementById("officeBox");
 const studentListBox = document.getElementById("studentListBox");
 
-const APP_URL = "https://script.google.com/macros/s/AKfycbxGghJXxc98FvhbsqHYRXOQ5Fa1BY7_XRX0hXEget7B-yP_wiAUJI9ZerCtqJca1JLB1A/exec";
+const APP_URL = "https://script.google.com/macros/s/AKfycbyE4Z7fC340BGZ_31WPGLVQoAQMEVMwCsBe0hUi-3ezASdar6wUJ0L5jpyLzZ-rMUBw/exec";
 
 /* ===================== ROLE SWITCH ===================== */
 function showSection(role) {
@@ -104,9 +104,17 @@ function submitStudent() {
 /* ===================== ADVISOR SUBMIT ===================== */
 function submitAdvisor() {
 
+  const loggedEmail = localStorage.getItem("loggedEmail");
+
+  if (!loggedEmail) {
+    alert("Session expired. Please login again.");
+    return;
+  }
+
   const data = {
     role: "advisor",
-    email: localStorage.getItem("loggedEmail"), // important for access check
+    advisorEmail: loggedEmail,
+    studentEmail: a_email.value,
     sid: a_sid.value,
     name: a_name.value,
     phone: a_phone.value,
